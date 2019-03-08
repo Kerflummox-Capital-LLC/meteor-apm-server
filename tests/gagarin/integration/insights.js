@@ -1,10 +1,10 @@
-describe('insights.emailSettings', function() {
-  beforeEach(function() {
+describe('insights.emailSettings', function () {
+  beforeEach(function () {
     GlobalServer.cleanUpUsers();
     GlobalServer.cleanUpApps();
   });
 
-  it('update email preferences', function() {
+  it('update email preferences', function () {
     var client = createDdpClient(GlobalServer);
     GlobalServer.createUser({
       username: 'ind',
@@ -12,7 +12,7 @@ describe('insights.emailSettings', function() {
       email: 'me@thinkholic.com'
     });
 
-    client.subscribe('apps.userOwned');
+    client.subscribe('apps.all');
 
     client.login({ user: { username: 'ind' }, password: 'password' });
     var appId = client.createApp('myTestApp2');
@@ -44,7 +44,7 @@ describe('insights.emailSettings', function() {
     expect(emailList).to.deep.equal(app.reports.emails);
   });
 
-  it('change email frequency', function() {
+  it('change email frequency', function () {
     var client = createDdpClient(GlobalServer);
     GlobalServer.createUser({
       username: 'ind',
@@ -52,7 +52,7 @@ describe('insights.emailSettings', function() {
       email: 'me@thinkholic.com'
     });
 
-    client.subscribe('apps.userOwned');
+    client.subscribe('apps.all');
 
     client.login({ user: { username: 'ind' }, password: 'password' });
     var appId = client.createApp('myTestApp2');

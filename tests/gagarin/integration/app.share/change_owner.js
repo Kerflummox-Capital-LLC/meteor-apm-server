@@ -1,22 +1,22 @@
-describe('app.share.change_owner', function() {
-  beforeEach(function() {
+describe('app.share.change_owner', function () {
+  beforeEach(function () {
     GlobalServer.cleanUpUsers();
     GlobalServer.cleanUpApps();
 
-    GlobalServer.execute(function() {
+    GlobalServer.execute(function () {
       var mock = sinon.mock(Email);
       mock.expects('send').returns(null);
       Meteor._mock = mock;
     });
   });
 
-  afterEach(function() {
-    GlobalServer.execute(function() {
+  afterEach(function () {
+    GlobalServer.execute(function () {
       Meteor._mock.restore();
     });
   });
 
-  it('there is no app', function() {
+  it('there is no app', function () {
     var client = createDdpClient(GlobalServer);
     GlobalServer.createUser({
       username: 'joeschmoe',
@@ -34,7 +34,7 @@ describe('app.share.change_owner', function() {
     expect(denied).to.be.equal(true);
   });
 
-  it('current user is not the owner', function() {
+  it('current user is not the owner', function () {
     var client = createDdpClient(GlobalServer);
     GlobalServer.createUser({
       username: 'joeschmoe',
@@ -61,7 +61,7 @@ describe('app.share.change_owner', function() {
     expect(denied).to.be.equal(true);
   });
 
-  it('add a pending owner', function() {
+  it('add a pending owner', function () {
     var client = createDdpClient(GlobalServer);
     GlobalServer.createUser({
       username: 'joeschmoe',
@@ -72,7 +72,7 @@ describe('app.share.change_owner', function() {
 
     var appId = client.createApp('app1');
     GlobalServer.execute(
-      function(appId) {
+      function (appId) {
         Apps.update({ _id: appId }, { $set: { plan: 'pro' } });
       },
       [appId]
@@ -88,7 +88,7 @@ describe('app.share.change_owner', function() {
     }
   });
 
-  it('only paid users can accept ownership invite', function() {
+  it('only paid users can accept ownership invite', function () {
     var client = createDdpClient(GlobalServer);
     GlobalServer.createUser({
       username: 'joeschmoe',
@@ -99,7 +99,7 @@ describe('app.share.change_owner', function() {
 
     var appId = client.createApp('app1');
     GlobalServer.execute(
-      function(appId) {
+      function (appId) {
         Apps.update({ _id: appId }, { $set: { plan: 'pro' } });
       },
       [appId]
@@ -120,7 +120,7 @@ describe('app.share.change_owner', function() {
       email: 'john@meteorhacks.com'
     });
     GlobalServer.execute(
-      function(userId) {
+      function (userId) {
         Meteor.users.update({ _id: userId }, { $set: { plan: 'free' } });
       },
       [userId]
@@ -135,7 +135,7 @@ describe('app.share.change_owner', function() {
     expect(denied).to.be.equal(true);
   });
 
-  it('accept the pending (paid) owner and make him as an owner', function() {
+  it('accept the pending (paid) owner and make him as an owner', function () {
     var client = createDdpClient(GlobalServer);
     GlobalServer.createUser({
       username: 'joeschmoe',
@@ -146,7 +146,7 @@ describe('app.share.change_owner', function() {
 
     var appId = client.createApp('app1');
     GlobalServer.execute(
-      function(appId) {
+      function (appId) {
         Apps.update({ _id: appId }, { $set: { plan: 'pro' } });
       },
       [appId]
@@ -167,7 +167,7 @@ describe('app.share.change_owner', function() {
       email: 'john@meteorhacks.com'
     });
     GlobalServer.execute(
-      function(userId) {
+      function (userId) {
         Meteor.users.update({ _id: userId }, { $set: { plan: 'pro' } });
       },
       [userId]
@@ -175,13 +175,13 @@ describe('app.share.change_owner', function() {
     client.login({ user: { username: 'john' }, password: 'password' });
     client.call('share.acceptInvite', [inviteId]);
 
-    client.subscribe('apps.userOwned');
+    client.subscribe('apps.all');
     client.subscribe('apps.collaboratored');
     var apps = client.collection('apps');
     expect(Object.keys(apps).length).to.be.equal(1);
   });
 
-  it('remove pending owner and try to accept again', function() {
+  it('remove pending owner and try to accept again', function () {
     var client = createDdpClient(GlobalServer);
     GlobalServer.createUser({
       username: 'joeschmoe',
@@ -192,7 +192,7 @@ describe('app.share.change_owner', function() {
 
     var appId = client.createApp('app1');
     GlobalServer.execute(
-      function(appId) {
+      function (appId) {
         Apps.update({ _id: appId }, { $set: { plan: 'pro' } });
       },
       [appId]

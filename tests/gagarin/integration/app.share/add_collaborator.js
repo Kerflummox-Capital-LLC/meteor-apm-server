@@ -1,22 +1,22 @@
-describe('app.share.add_collaborator', function() {
-  beforeEach(function() {
+describe('app.share.add_collaborator', function () {
+  beforeEach(function () {
     GlobalServer.cleanUpUsers();
     GlobalServer.cleanUpApps();
 
-    GlobalServer.execute(function() {
+    GlobalServer.execute(function () {
       var mock = sinon.mock(Email);
       mock.expects('send').returns(null);
       Meteor._mock = mock;
     });
   });
 
-  afterEach(function() {
-    GlobalServer.execute(function() {
+  afterEach(function () {
+    GlobalServer.execute(function () {
       Meteor._mock.restore();
     });
   });
 
-  it('there is no app', function() {
+  it('there is no app', function () {
     var client = createDdpClient(GlobalServer);
     GlobalServer.createUser({
       username: 'joeschmoe',
@@ -35,7 +35,7 @@ describe('app.share.add_collaborator', function() {
     expect(msg).to.be.equal('App Not found [403]');
   });
 
-  it('current user is not the owner', function() {
+  it('current user is not the owner', function () {
     var client = createDdpClient(GlobalServer);
     GlobalServer.createUser({
       username: 'joeschmoe',
@@ -62,7 +62,7 @@ describe('app.share.add_collaborator', function() {
     var expectedMsg = 'You are not authorized to add collaborators [403]';
     expect(msg).to.be.equal(expectedMsg);
   });
-  it("can't add already invited collaborator", function() {
+  it("can't add already invited collaborator", function () {
     var client = createDdpClient(GlobalServer);
     GlobalServer.createUser({
       username: 'joeschmoe',
@@ -72,7 +72,7 @@ describe('app.share.add_collaborator', function() {
     client.login({ user: { username: 'joeschmoe' }, password: 'password' });
     var appId = client.createApp('app1');
     GlobalServer.execute(
-      function(appId) {
+      function (appId) {
         Apps.update({ _id: appId }, { $set: { plan: 'pro' } });
       },
       [appId]
@@ -89,7 +89,7 @@ describe('app.share.add_collaborator', function() {
     expect(msg).to.be.equal(expectedMsg);
   });
 
-  it('accept the pending collaborator and became a collaborator', function() {
+  it('accept the pending collaborator and became a collaborator', function () {
     var client = createDdpClient(GlobalServer);
     GlobalServer.createUser({
       username: 'joeschmoe',
@@ -99,7 +99,7 @@ describe('app.share.add_collaborator', function() {
     client.login({ user: { username: 'joeschmoe' }, password: 'password' });
     var appId = client.createApp('app1');
     GlobalServer.execute(
-      function(appId) {
+      function (appId) {
         Apps.update({ _id: appId }, { $set: { plan: 'pro' } });
       },
       [appId]
@@ -117,14 +117,14 @@ describe('app.share.add_collaborator', function() {
     client.login({ user: { username: 'john' }, password: 'password' });
     client.call('share.acceptInvite', [inviteId]);
 
-    client.subscribe('apps.userOwned');
+    client.subscribe('apps.all');
     client.subscribe('apps.collaboratored');
 
     var apps = client.collection('apps');
     expect(Object.keys(apps).length).to.be.equal(1);
   });
 
-  it('remove pending collaborator and try to accept again', function() {
+  it('remove pending collaborator and try to accept again', function () {
     var client = createDdpClient(GlobalServer);
     GlobalServer.createUser({
       username: 'joeschmoe',
@@ -134,7 +134,7 @@ describe('app.share.add_collaborator', function() {
     client.login({ user: { username: 'joeschmoe' }, password: 'password' });
     var appId = client.createApp('app1');
     GlobalServer.execute(
-      function(appId) {
+      function (appId) {
         Apps.update({ _id: appId }, { $set: { plan: 'pro' } });
       },
       [appId]

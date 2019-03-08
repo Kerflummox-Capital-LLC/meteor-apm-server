@@ -1,13 +1,13 @@
-Meteor.publish('apps.userOwned', function() {
+Meteor.publish('apps.all', function () {
   this.unblock();
   if (this.userId) {
-    return Apps.find({ owner: this.userId }, { sort: { created: 1 } });
+    return Apps.find({}, { sort: { created: 1 } });
   } else {
     return this.ready();
   }
 });
 
-Meteor.publish('apps.collaboratored', function() {
+Meteor.publish('apps.collaboratored', function () {
   this.unblock();
   if (this.userId) {
     return PermissionsMananger.roles.getUserApps(this.userId);
@@ -16,7 +16,7 @@ Meteor.publish('apps.collaboratored', function() {
   }
 });
 
-Meteor.publish('apps.pendingUsers', function(appId) {
+Meteor.publish('apps.pendingUsers', function (appId) {
   check(appId, String);
   this.unblock();
   var isAllowed = PermissionsMananger.roles.isAllowed('manage_collaborators', appId, this.userId);
@@ -27,7 +27,7 @@ Meteor.publish('apps.pendingUsers', function(appId) {
   }
 });
 
-Meteor.publish('apps.collaborators', function(appId) {
+Meteor.publish('apps.collaborators', function (appId) {
   check(appId, String);
   this.unblock();
 
@@ -64,7 +64,7 @@ Meteor.publish('apps.collaborators', function(appId) {
   return cursorsArr;
 });
 
-Meteor.publish('apps.admin', function(appId) {
+Meteor.publish('apps.admin', function (appId) {
   this.unblock();
   check(appId, String);
   var user = Meteor.users.findOne(this.userId);

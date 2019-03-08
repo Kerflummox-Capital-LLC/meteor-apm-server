@@ -1,10 +1,10 @@
-describe('apps.create_app', function() {
-  beforeEach(function() {
+describe('apps.create_app', function () {
+  beforeEach(function () {
     GlobalServer.cleanUpUsers();
     GlobalServer.cleanUpApps();
   });
 
-  it('get the app for the loggedIn user', function() {
+  it('get the app for the loggedIn user', function () {
     var client = createDdpClient(GlobalServer);
     GlobalServer.createUser({
       username: 'joeschmoe',
@@ -15,7 +15,7 @@ describe('apps.create_app', function() {
     client.login({ user: { username: 'joeschmoe' }, password: 'password' });
 
     client.createApp('app1');
-    var subId = client.subscribe('apps.userOwned');
+    var subId = client.subscribe('apps.all');
     var subId2 = client.subscribe('apps.collaboratored');
 
     client.sleep(200);
@@ -26,13 +26,13 @@ describe('apps.create_app', function() {
   });
 });
 
-describe('app.settings_tab', function() {
-  beforeEach(function() {
+describe('app.settings_tab', function () {
+  beforeEach(function () {
     GlobalServer.cleanUpUsers();
     GlobalServer.cleanUpApps();
   });
 
-  it('update app name', function() {
+  it('update app name', function () {
     var client = createDdpClient(GlobalServer);
     GlobalServer.createUser({
       username: 'ind',
@@ -40,7 +40,7 @@ describe('app.settings_tab', function() {
       email: 'me@thinkholic.com'
     });
 
-    client.subscribe('apps.userOwned');
+    client.subscribe('apps.all');
     client.subscribe('apps.collaboratored');
 
     client.login({ user: { username: 'ind' }, password: 'password' });
@@ -54,7 +54,7 @@ describe('app.settings_tab', function() {
     expect(appName).to.be.equal('NewAppName');
   });
 
-  it('regenerate app secret', function() {
+  it('regenerate app secret', function () {
     var client = createDdpClient(GlobalServer);
     GlobalServer.createUser({
       username: 'ind',
@@ -62,7 +62,7 @@ describe('app.settings_tab', function() {
       email: 'me@thinkholic.com'
     });
 
-    client.subscribe('apps.userOwned');
+    client.subscribe('apps.all');
     client.subscribe('apps.collaboratored');
 
     client.login({ user: { username: 'ind' }, password: 'password' });
@@ -79,7 +79,7 @@ describe('app.settings_tab', function() {
     expect(newAppSecret).not.to.be.equal(appSecret);
   });
 
-  it('delete the app', function() {
+  it('delete the app', function () {
     var client = createDdpClient(GlobalServer);
     GlobalServer.createUser({
       username: 'ind',
@@ -87,7 +87,7 @@ describe('app.settings_tab', function() {
       email: 'me@thinkholic.com'
     });
 
-    client.subscribe('apps.userOwned');
+    client.subscribe('apps.all');
     client.subscribe('apps.collaboratored');
 
     client.login({ user: { username: 'ind' }, password: 'password' });

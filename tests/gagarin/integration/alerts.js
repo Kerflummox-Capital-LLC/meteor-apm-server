@@ -1,11 +1,11 @@
-describe('alerts', function() {
-  beforeEach(function() {
+describe('alerts', function () {
+  beforeEach(function () {
     GlobalServer.cleanUpUsers();
     GlobalServer.cleanUpApps();
     GlobalServer.cleanUpAlerts();
   });
 
-  it('create new alerts', function() {
+  it('create new alerts', function () {
     var client = createDdpClient(GlobalServer);
     GlobalServer.createUser({
       username: 'ind',
@@ -13,7 +13,7 @@ describe('alerts', function() {
       email: 'me@thinkholic.com'
     });
 
-    client.subscribe('apps.userOwned');
+    client.subscribe('apps.all');
 
     client.login({ user: { username: 'ind' }, password: 'password' });
     var appId = client.createApp('myTestApp2');
@@ -31,7 +31,7 @@ describe('alerts', function() {
     expect(Object.keys(alerts).length).to.equal(1);
   });
 
-  it('create new alerts when alert duration greater than 60mins', function() {
+  it('create new alerts when alert duration greater than 60mins', function () {
     var client = createDdpClient(GlobalServer);
     GlobalServer.createUser({
       username: 'ind',
@@ -39,7 +39,7 @@ describe('alerts', function() {
       email: 'me@thinkholic.com'
     });
 
-    client.subscribe('apps.userOwned');
+    client.subscribe('apps.all');
 
     client.login({ user: { username: 'ind' }, password: 'password' });
     var appId = client.createApp('myTestApp3');
@@ -61,7 +61,7 @@ describe('alerts', function() {
     expect(Object.keys(alerts).length).to.equal(1);
   });
 
-  it('update the alert', function() {
+  it('update the alert', function () {
     var client = createDdpClient(GlobalServer);
     GlobalServer.createUser({
       username: 'ind',
@@ -69,7 +69,7 @@ describe('alerts', function() {
       email: 'me@thinkholic.com'
     });
 
-    client.subscribe('apps.userOwned');
+    client.subscribe('apps.all');
 
     client.login({ user: { username: 'ind' }, password: 'password' });
     var appId = client.createApp('myTestApp2');
@@ -97,7 +97,7 @@ describe('alerts', function() {
     expect(alertNameToBeRename).to.be.equal(newAlertName);
   });
 
-  it('toggle enable/disable alert status', function() {
+  it('toggle enable/disable alert status', function () {
     var client = createDdpClient(GlobalServer);
     GlobalServer.createUser({
       username: 'ind',
@@ -105,7 +105,7 @@ describe('alerts', function() {
       email: 'me@thinkholic.com'
     });
 
-    client.subscribe('apps.userOwned');
+    client.subscribe('apps.all');
 
     client.login({ user: { username: 'ind' }, password: 'password' });
     var appId = client.createApp('myTestApp2');
@@ -132,7 +132,7 @@ describe('alerts', function() {
     expect(previousAlertStatus).not.to.be.equal(newAlertStatus);
   });
 
-  it('delete alerts', function() {
+  it('delete alerts', function () {
     var client = createDdpClient(GlobalServer);
     GlobalServer.createUser({
       username: 'ind',
@@ -140,7 +140,7 @@ describe('alerts', function() {
       email: 'me@thinkholic.com'
     });
 
-    client.subscribe('apps.userOwned');
+    client.subscribe('apps.all');
 
     client.login({ user: { username: 'ind' }, password: 'password' });
     var appId = client.createApp('myTestApp4');

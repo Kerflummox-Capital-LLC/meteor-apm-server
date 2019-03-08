@@ -1,10 +1,10 @@
-describe('app.share.remove_collaborator', function() {
-  beforeEach(function() {
+describe('app.share.remove_collaborator', function () {
+  beforeEach(function () {
     GlobalServer.cleanUpUsers();
     GlobalServer.cleanUpApps();
     GlobalServer.cleanUpPendingUsers();
 
-    GlobalServer.execute(function() {
+    GlobalServer.execute(function () {
       var mock = sinon.mock(Email);
       mock
         .expects('send')
@@ -14,13 +14,13 @@ describe('app.share.remove_collaborator', function() {
     });
   });
 
-  afterEach(function() {
-    GlobalServer.execute(function() {
+  afterEach(function () {
+    GlobalServer.execute(function () {
       Meteor._mock.restore();
     });
   });
 
-  it('there is no app', function() {
+  it('there is no app', function () {
     var client = createDdpClient(GlobalServer);
     GlobalServer.createUser({
       username: 'joeschmoe',
@@ -37,7 +37,7 @@ describe('app.share.remove_collaborator', function() {
     expect(msg).to.be.equal('App Not found [403]');
   });
 
-  it('current user can remove himself from collaborators', function() {
+  it('current user can remove himself from collaborators', function () {
     var client = createDdpClient(GlobalServer);
     GlobalServer.createUser({
       username: 'joeschmoe',
@@ -48,7 +48,7 @@ describe('app.share.remove_collaborator', function() {
 
     var appId = client.createApp('app1');
     GlobalServer.execute(
-      function(appId) {
+      function (appId) {
         Apps.update({ _id: appId }, { $set: { plan: 'pro' } });
       },
       [appId]
@@ -65,7 +65,7 @@ describe('app.share.remove_collaborator', function() {
     });
     client.login({ user: { username: 'john' }, password: 'password' });
     client.call('share.acceptInvite', [inviteId]);
-    var subId2 = client.subscribe('apps.userOwned');
+    var subId2 = client.subscribe('apps.all');
     var subId3 = client.subscribe('apps.collaboratored');
     client.call('share.removeCollaborator', [appId, userId]);
     client.sleep(200);
@@ -75,7 +75,7 @@ describe('app.share.remove_collaborator', function() {
     client.unsubscribe(subId3);
   });
 
-  it('current owner can remove any collaborator', function() {
+  it('current owner can remove any collaborator', function () {
     var client = createDdpClient(GlobalServer);
     GlobalServer.createUser({
       username: 'joeschmoe',
@@ -86,7 +86,7 @@ describe('app.share.remove_collaborator', function() {
 
     var appId = client.createApp('app1');
     GlobalServer.execute(
-      function(appId) {
+      function (appId) {
         Apps.update({ _id: appId }, { $set: { plan: 'pro' } });
       },
       [appId]
@@ -111,7 +111,7 @@ describe('app.share.remove_collaborator', function() {
 
     client.login({ user: { username: 'john' }, password: 'password' });
 
-    var subId2 = client.subscribe('apps.userOwned');
+    var subId2 = client.subscribe('apps.all');
     var subId3 = client.subscribe('apps.collaboratored');
 
     client.subscribe('apps.collaboratored');
@@ -122,7 +122,7 @@ describe('app.share.remove_collaborator', function() {
     client.unsubscribe(subId3);
   });
 
-  it('colllaborator cannot remove another collaborator', function() {
+  it('colllaborator cannot remove another collaborator', function () {
     var client = createDdpClient(GlobalServer);
     GlobalServer.createUser({
       username: 'joeschmoe',
@@ -132,7 +132,7 @@ describe('app.share.remove_collaborator', function() {
     client.login({ user: { username: 'joeschmoe' }, password: 'password' });
     var appId = client.createApp('app1');
     GlobalServer.execute(
-      function(appId) {
+      function (appId) {
         Apps.update({ _id: appId }, { $set: { plan: 'pro' } });
       },
       [appId]
