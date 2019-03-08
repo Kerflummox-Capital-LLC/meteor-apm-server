@@ -8,7 +8,8 @@
   "scripts": {
     "mup-deploy": "npx mup setup && npx mup deploy",
     "mup-logs": "npx mup logs",
-    "mup-restart": "npx mup restart"
+    "mup-restart": "npx mup restart",
+    "start": "meteor run --port 3004"
   },
   "repository": {
     "type": "git",
