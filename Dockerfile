@@ -1,5 +1,5 @@
 # The tag here should match the Meteor version of your app, per .meteor/release
-FROM geoffreybooth/meteor-base:1.8.0.2
+FROM geoffreybooth/meteor-base:1.6.1.1
 
 # Copy app package.json and package-lock.json into container
 COPY ./*.json $APP_SOURCE_FOLDER/
@@ -39,6 +39,7 @@ RUN bash $SCRIPTS_FOLDER/build-meteor-npm-dependencies.sh \
 
 # Start app
 
+EXPOSE 5000
 EXPOSE 7007
 EXPOSE 11011
 
