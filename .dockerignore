@@ -1,0 +1,14 @@
+app/.meteor/local
+app/node_modules
+app/npm-debug.log
+app/Dockerfile*
+app/docker-compose*
+app/.dockerignore
+app/.git
+app/.gitignore
+app/.env
+app/*/bin
+app/*/obj
+app/README.md
+app/LICENSE
+app/.vscode

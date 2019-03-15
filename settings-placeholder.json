@@ -1,6 +1,0 @@
-{
-  "metricsLifetime": 604800000,
-  "public": {
-    "apmEngineUrl": "https://apm-engine.YOUR_DOMAIN.com"
-  }
-}
