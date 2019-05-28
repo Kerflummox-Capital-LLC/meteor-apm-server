@@ -11,6 +11,11 @@ import TickManager from './tick_manager';
 import parseMongoUrl from 'parse-mongo-url';
 import { processAlone } from './utils';
 
+// we only want to run the engine based on these env variables
+if (process.env.TYPE != 'both' && process.env.TYPE != 'engine') {
+  return
+}
+
 const debug = require('debug')('alertsman:index');
 const { info, error } = console;
 

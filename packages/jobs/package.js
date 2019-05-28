@@ -5,14 +5,14 @@ Package.describe({
 
 Npm.depends({ 'aws-sdk': '2.0.18' });
 
-Package.on_use(function(api, where) {
+Package.on_use(function (api, where) {
   configurePackage(api);
 
   api.export(['Job', 'Jobs'], ['client', 'server']);
   api.export(['JobsCollection'], { testOnly: true });
 });
 
-Package.on_test(function(api) {
+Package.on_test(function (api) {
   configurePackage(api);
   api.use('tinytest');
   api.use('test-helpers');
@@ -21,7 +21,6 @@ Package.on_test(function(api) {
 });
 
 function configurePackage(api) {
-  api.versionsFrom('METEOR@1.0');
   api.use('livedata');
   api.use('mongo-livedata');
   api.use('audit-argument-checks');

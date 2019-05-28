@@ -9,7 +9,10 @@
     "mup-deploy": "npx mup setup && npx mup deploy",
     "mup-logs": "npx mup logs",
     "mup-restart": "npx mup restart",
-    "start": "meteor run --port 3004"
+    "start": "TYPE=both meteor run --port 3004",
+    "start-engine": "MONGO_URL=mongodb://localhost:3009/meteor TYPE=engine meteor run --port 3010",
+    "start-client": "TYPE=client meteor run --port 3008",
+    "deploy-galaxy": "DEPLOY_HOSTNAME=us-east-1.galaxy-deploy.meteor.com meteor deploy kfmx-monit.meteorapp.com --settings settings.json --owner cyberbuoy"
   },
   "repository": {
     "type": "git",

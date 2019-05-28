@@ -10,6 +10,12 @@ import { loadSchemas } from './schemas';
 
 const logger = console;
 
+console.log(process.env.TYPE);
+// we only want to run the engine based on these env variables
+if (process.env.TYPE != 'both' && process.env.TYPE != 'engine') {
+  return
+}
+
 try {
   const { API_PORT, MAIL_URL } = process.env;
   const apiPort = API_PORT || 7007;

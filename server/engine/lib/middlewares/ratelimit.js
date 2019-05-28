@@ -1,4 +1,4 @@
-module.exports = function(config) {
+module.exports = function (config) {
   config = config || {};
   config.limit = config.limit || 10;
   config.resetTimeout = config.resetTimeout || 1000;
@@ -6,11 +6,11 @@ module.exports = function(config) {
 
   var ratesPerApp = {};
 
-  setInterval(function() {
+  setInterval(function () {
     ratesPerApp = {};
   }, config.resetTimeout);
 
-  return function(req, res, next) {
+  return function (req, res, next) {
     var data = req.body;
     var appId = req.appId;
 

@@ -3,6 +3,11 @@ var query = require('connect-query');
 var http = require('http');
 var bodyParser = require('body-parser');
 
+// we only want to run the engine based on these env variables
+if (process.env.TYPE != 'both' && process.env.TYPE != 'engine') {
+  return
+}
+
 var app = connect();
 
 app.use(query());

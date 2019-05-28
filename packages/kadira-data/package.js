@@ -7,7 +7,7 @@ Npm.depends({
   'lru-cache': '2.6.4'
 });
 
-Package.onTest(function(api) {
+Package.onTest(function (api) {
   configurePackage(api);
 
   api.addFiles(
@@ -29,13 +29,12 @@ Package.onTest(function(api) {
   api.use('random');
 });
 
-Package.onUse(function(api) {
+Package.onUse(function (api) {
   configurePackage(api);
   api.export('KadiraData');
 });
 
 function configurePackage(api) {
-  api.versionsFrom('METEOR@1.0');
   api.use('mongo');
   api.use('accounts-base');
   api.use('underscore');
