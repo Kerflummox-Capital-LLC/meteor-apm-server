@@ -1,5 +1,5 @@
 // we only want to run the engine based on these env variables
-if (process.env.TYPE != 'both' && process.env.TYPE != 'engine') {
+if (process.env.TYPE != 'engine') {
   Meteor.publish('apps.all', function () {
     this.unblock();
     if (this.userId) {

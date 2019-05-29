@@ -1,4 +1,4 @@
-if (process.env.TYPE != 'both' && process.env.TYPE != 'engine') {
+if (process.env.TYPE != 'engine') {
   Meteor.methods({
     'share.changeOwner': function (appId, email) {
       var isAllowed = PermissionsMananger.roles.isAllowed('manage_collaborators', appId, this.userId);

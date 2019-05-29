@@ -12,7 +12,7 @@ import parseMongoUrl from 'parse-mongo-url';
 import { processAlone } from './utils';
 
 // we only want to run the engine based on these env variables
-if (process.env.TYPE != 'both' && process.env.TYPE != 'engine') {
+if (process.env.TYPE == 'client') {
   return
 }
 
@@ -69,7 +69,6 @@ const handleFire = async alert => {
     // to mark the alert as armed.
     messenger.sendTriggered(alert, checkedResult);
     await alertsStore.setArmed(alert, true);
-    console.log('sendTriggered');
     return;
   }
 

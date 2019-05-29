@@ -6,13 +6,13 @@ import LRU from 'lru-cache';
 import { renderGraphiQL } from 'express-graphql/dist/renderGraphiQL';
 import { getAdminToken, getAppToken, decodeToken } from '../authlayer';
 
-export const sendPong = function() {
-  return function(req, res) {
+export const sendPong = function () {
+  return function (req, res) {
     res.sendStatus(200);
   };
 };
 
-export const handleAuth = function(appDb) {
+export const handleAuth = function (appDb) {
   const apps = appDb.collection('apps');
 
   async function authenticate(req, res) {
@@ -41,7 +41,7 @@ export const handleAuth = function(appDb) {
   return [bodyParser.json(), authenticate];
 };
 
-export const loadExplorer = function(authSecret, schemas) {
+export const loadExplorer = function (authSecret, schemas) {
   const middlewares = [
     cookieParser(),
     bodyParser.json(),
@@ -52,13 +52,13 @@ export const loadExplorer = function(authSecret, schemas) {
   return middlewares;
 };
 
-export const authenticate = function(authSecret, schemas) {
+export const authenticate = function (authSecret, schemas) {
   const authTokens = new LRU({
     max: 1000,
     maxAge: 1000 * 60 * 60 // 1hour
   });
 
-  return function(req, res, next) {
+  return function (req, res, next) {
     if (!schemas[req.params.schema]) {
       res.statusCode = 401;
       return res.send('Schema not found!');
@@ -99,12 +99,11 @@ export const authenticate = function(authSecret, schemas) {
   };
 };
 
-export const loadGraphiQL = function(schemas) {
-  return function(req, res) {
+export const loadGraphiQL = function (schemas) {
+  return function (req, res) {
     const rootValue = { token: req.token };
     const schemaName = req.params.schema;
     const schema = schemas[schemaName];
-
     if (req.method === 'GET') {
       const { query } = req.query;
       let variables = req.query.variables ? req.query.variables : '{}';

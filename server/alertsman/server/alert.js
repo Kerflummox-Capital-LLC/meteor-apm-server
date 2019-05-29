@@ -9,7 +9,7 @@ export default class Alert {
     this.meta = alert.meta;
     this.rule = alert.rule;
     this.triggers = alert.triggers || [];
-    this.appName = alert.appName;
+    this.appName = alert.meta.appName;
     this.armedDate = alert.armedDate;
     this.lastCheckedDate = alert.lastCheckedDate;
     this.lastArmedClearedDate = alert.lastArmedClearedDate;
@@ -186,8 +186,8 @@ export default class Alert {
 Regarding Your App: <b>${appName}</b>.<br/>
 Alert <b>${name}</b> has triggered.<br/><br/>
 ${ruleType} has been <b>${reason} ${threshold}</b> (${current}: <b>${value}</b>) ${prettyTime}${onHosts
-      ? ' ' + onHosts
-      : ''}.<br/><br/>
+        ? ' ' + onHosts
+        : ''}.<br/><br/>
 
 Visit <a href="${url}">Kadira</a> and find out more.`;
     /* eslint-enable max-len */
@@ -241,8 +241,8 @@ Visit <a href="${url}">Kadira</a> and find out more.`;
       /* eslint-disable max-len */
       const text = `
 ${ruleType} has been *${reason} ${threshold}* (Observed: *${value}*) ${prettyTime}${onHosts
-        ? ' ' + onHosts
-        : ''}.
+          ? ' ' + onHosts
+          : ''}.
 
 Visit ${shortUrl} and find out more.
         `;

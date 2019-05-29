@@ -1,4 +1,4 @@
-if (process.env.TYPE != 'both' && process.env.TYPE != 'engine') {
+if (process.env.TYPE != 'engine') {
   Meteor.methods({
     'traceExplorer.getIpLocation': function (ip) {
       check(ip, String);

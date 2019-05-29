@@ -11,17 +11,3 @@ Meteor.startup(() => {
     });
   }
 });
-
-WebApp.rawConnectHandlers.use((req, res, next) => {
-  if (process.env.TYPE != 'both' && process.env.TYPE != 'client') {
-    res.writeHeader(401);
-    res.end('[401] Invalid port name');
-  }
-  else { next(); }
-});
-
-Meteor.onConnection((session) => {
-  if (process.env.TYPE != 'both' && process.env.TYPE != 'client') {
-    session.close()
-  }
-})

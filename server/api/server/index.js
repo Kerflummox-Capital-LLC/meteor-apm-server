@@ -12,7 +12,7 @@ const logger = console;
 
 console.log(process.env.TYPE);
 // we only want to run the engine based on these env variables
-if (process.env.TYPE != 'both' && process.env.TYPE != 'engine') {
+if (process.env.TYPE == 'client') {
   return
 }
 

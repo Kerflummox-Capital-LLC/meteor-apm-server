@@ -1,4 +1,4 @@
-if (process.env.TYPE != 'both' && process.env.TYPE != 'engine') {
+if (process.env.TYPE != 'engine') {
   Meteor.methods({
     'errorsMeta.changeState': function (appId, errorName, errorType, status) {
       check(appId, String);

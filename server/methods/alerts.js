@@ -1,4 +1,4 @@
-if (process.env.TYPE != 'both' && process.env.TYPE != 'engine') {
+if (process.env.TYPE != 'engine') {
   Meteor.methods({
     'alerts.create': function (alertInfo) {
       check(alertInfo, Object);
@@ -62,10 +62,10 @@ if (process.env.TYPE != 'both' && process.env.TYPE != 'engine') {
       return true;
     }
   });
+}
 
-  function setAppName(alertsInfo) {
-    var appId = alertsInfo.meta.appId;
-    var app = Apps.findOne(appId);
-    alertsInfo.meta.appName = app.name;
-  }
+function setAppName(alertsInfo) {
+  var appId = alertsInfo.meta.appId;
+  var app = Apps.findOne(appId);
+  alertsInfo.meta.appName = app.name;
 }

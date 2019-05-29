@@ -57,7 +57,7 @@ async function runLong() {
 
 // we only want to run the engine based on these env variables
 Meteor.startup(() => {
-  if (process.env.TYPE != 'both' && process.env.TYPE != 'engine') {
+  if (process.env.TYPE != 'client') {
     runShort();
     runMedium();
     runLong();

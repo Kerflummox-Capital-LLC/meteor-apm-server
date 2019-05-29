@@ -1,5 +1,5 @@
 /*eslint-disable new-cap*/
-if (process.env.TYPE != 'both' && process.env.TYPE != 'engine') {
+if (process.env.TYPE != 'engine') {
   Meteor.methods({
     'apps.create': function (appName) {
       check(appName, String);
