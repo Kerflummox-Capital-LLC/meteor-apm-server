@@ -62,12 +62,12 @@ export default class Messenger {
 
     triggers.forEach(trigger => {
       switch (trigger.type) {
-        case 'email':
-          const { subject, body } = emailPayload;
-          trigger.params.addresses.forEach(address => {
-            triggerPromises.push(this._sendEmail(address, subject, body));
-          });
-          break;
+        // case 'email':
+        //   const { subject, body } = emailPayload;
+        //   trigger.params.addresses.forEach(address => {
+        //     triggerPromises.push(this._sendEmail(address, subject, body));
+        //   });
+        //   break;
         case 'webhook':
           trigger.params.urls.forEach(url => {
             let payload = webHookPayload;
