@@ -129,8 +129,11 @@ upstream {{ $.APP }}-{{ $upstream_port }} {
 {{ $listener_ip := index $listener_list 0 }}
   ip_hash;
 
-  server {{ $listener_ip }}:{{ $upstream_port }};{{ end }}
-
+  {{ if eq (var "TYPE") "engine" }}
+    server {{ $listener_ip }}:11011;{{ end }}
+  {{ else }}
+    server {{ $listener_ip }}:{{ $upstream_port }};{{ end }}
+  {{ end }}
 }
 {{ end }}
 
