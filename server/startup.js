@@ -1,11 +1,10 @@
 Meteor.startup(() => {
   if (!Meteor.users.findOne({})) {
-    console.log('Create a user to get started!')
-    // Accounts.createUser({
-    //   username: 'admin',
-    //   email: 'admin@admin.com',
-    //   password: 'admin',
-    //   plan: 'business'
-    // });
+    Accounts.createUser({
+      username: 'Don',
+      email: 'don@kerflummoxcapital.com',
+      password: 'admin',
+      plan: 'business'
+    });
   }
 });
