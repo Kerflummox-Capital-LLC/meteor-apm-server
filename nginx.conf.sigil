@@ -135,7 +135,7 @@ upstream {{ $.APP }}-{{ $upstream_port }} {
     server {{ $listener_ip }}:11011;{{ end }}
   {{ end }}
 }
-{{ end }}
+{{ end }}{{ end }}
 
 {{ if $.DOKKU_APP_LISTENERS }}
 upstream engine {
@@ -146,4 +146,4 @@ upstream engine {
 
   server {{ $listener_ip }}:11011;{{ end }}
 }
-{{ end }}{{ end }}
+{{ end }}
