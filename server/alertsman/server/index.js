@@ -64,6 +64,8 @@ const handleFire = async alert => {
     // to mark the alert as armed.
     messenger.sendTriggered(alert, checkedResult);
     await alertsStore.setArmed(alert, true);
+    console.log(`Armed: ${armed}`);
+    console.log(`Checked Result: ${JSON.stringify(checkedResult)}`);
     console.log('sendTriggered');
     return;
   }
@@ -73,6 +75,8 @@ const handleFire = async alert => {
     // to mark the alert as cleared.
     messenger.sendCleared(alert, checkedResult);
     await alertsStore.setArmed(alert, false);
+    console.log(`Armed: ${armed}`);
+    console.log(`Checked Result: ${JSON.stringify(checkedResult)}`);
     console.log('sendCleared');
     return;
   }

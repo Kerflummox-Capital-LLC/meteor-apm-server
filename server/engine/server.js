@@ -31,6 +31,7 @@ http.createServer(app).listen(port);
 // parse JSON data sent using XDR with has data type set to text/plain
 // do this before appinfo otherwise required data will not be available
 app.use('/engine/errors', require('./lib/middlewares/plaintext-body'));
+app.use('/errors', require('./lib/middlewares/plaintext-body'));
 
 // extract appId and appSecret. Used by ratelimit.
 app.use(require('./lib/middlewares/appinfo'));
@@ -53,6 +54,7 @@ require('./lib/stateManager');
 var errorManager = require('./lib/middlewares/error-manager');
 const appDb = MongoInternals.defaultRemoteCollectionDriver().mongo.db;
 app.use('/engine/errors', errorManager(appDb));
+app.use('/errors', errorManager(appDb));
 
 // authenticare middleware
 // ping middleware must be used after the authentication middleware
