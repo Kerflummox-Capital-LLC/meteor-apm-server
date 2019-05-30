@@ -80,6 +80,10 @@ server {
     proxy_pass http://engine;
   }
 
+  location /simplentp/ {
+    proxy_pass http://engine;
+  }
+
   location    / {
     gzip on;
     gzip_min_length  1100;
