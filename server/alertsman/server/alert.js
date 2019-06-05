@@ -28,11 +28,7 @@ export default class Alert {
   }
 
   isArmed() {
-    if (this.armedDate == null) {
-      return false;
-    }
-
-    return true;
+    return Boolean(this.armedDate);
   }
 
   getArmedDate() {
