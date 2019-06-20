@@ -100,6 +100,7 @@ export default class AlertsStore extends EventEmitter {
 
   async onOplogOp(op) {
     debug(`new alerts update type=${op.operation} id=${op.alertId}`);
+    console.log(`new alerts update type=${op.operation} id=${op.alertId}`)
     switch (op.operation) {
       case 'updateLastCheckedDate':
         if (this.alerts[op.alertId]) {
@@ -149,6 +150,8 @@ export default class AlertsStore extends EventEmitter {
       mutations.lastArmedClearedDate = new Date();
     }
 
+    console.log(alert.getId());
+    console.log(mutations);
     await this.alertsCol.update(alert.getId(), {
       $set: mutations
     });

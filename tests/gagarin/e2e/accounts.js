@@ -1,32 +1,30 @@
-describe('acounts.billingInfo', function() {
-  beforeEach(function() {
+describe('acounts.billingInfo', function () {
+  beforeEach(function () {
     GlobalClient.logout();
     GlobalServer.cleanUpUsers();
     GlobalServer.cleanUpApps();
   });
 
-  afterEach(function() {
+  afterEach(function () {
     GlobalClient.logout();
     GlobalServer.cleanUpUsers();
     GlobalServer.cleanUpApps();
   });
 
-  it('user can login and route to accounts page', function() {
+  it('user can login and route to accounts page', function () {
     GlobalClient.createUserAndLogin();
     GlobalClient.goGetPath('/');
 
     GlobalClient.goGetPath('/account');
     var newPath = GlobalClient.getCurrentPath();
 
-    var expectedPath = '/account/billing';
     expect(newPath).to.be.equal(expectedPath);
   });
 
-  it('update billing info', function() {
+  it('update billing info', function () {
     GlobalClient.createUserAndLogin();
     GlobalClient.goGetPath('/');
 
-    GlobalClient.goGetPath('/account/billing');
     GlobalClient.sleep(200);
     GlobalClient.waitForDOM('#name');
 
@@ -54,9 +52,6 @@ describe('acounts.billingInfo', function() {
     GlobalClient.sleep(200);
     GlobalClient.click('#update-billing-info');
     GlobalClient.sleep(200);
-
-    GlobalClient.goGetPath('/account/plans');
-    GlobalClient.goGetPath('/account/billing');
 
     GlobalClient.sleep(50);
 
