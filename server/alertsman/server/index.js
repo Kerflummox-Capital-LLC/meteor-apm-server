@@ -68,9 +68,7 @@ const handleFire = async alert => {
     console.log(`Checked Result: ${JSON.stringify(checkedResult)}`);
     console.log('sendTriggered');
     return;
-  }
-
-  if (armed && !checkedResult.success) {
+  } else if (armed && !checkedResult.success) {
     // We don't need to wait until the trigger sends
     // to mark the alert as cleared.
     messenger.sendCleared(alert, checkedResult);
@@ -80,6 +78,8 @@ const handleFire = async alert => {
     console.log('sendCleared');
     return;
   }
+
+
 };
 
 tickManager.on('fire', async alert => {
