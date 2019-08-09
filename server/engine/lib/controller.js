@@ -78,7 +78,7 @@ module.exports = function (app, db) {
         'Content-Type': 'text/plain'
       });
       res.end();
-    } else if (req.method == 'GET' && path == '/metrics') {
+    } else if (req.method == 'GET' && (path == '/metrics' || path == '/engine/metrics')) {
       const metrics = await nodeExporter(req.body);
       res.writeHead(200, {
         'Content-Type': 'text/plain'
