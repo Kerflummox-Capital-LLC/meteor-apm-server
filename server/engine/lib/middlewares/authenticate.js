@@ -1,14 +1,20 @@
 var stateManager = require('../stateManager');
 
-module.exports = function(db) {
+module.exports = function (db) {
   var appsCollection = db.collection('apps');
 
-  return function(req, res, next) {
+  return function (req, res, next) {
     var appId = req.appId;
     var appSecret = req.appSecret;
+
+    if (req.query && req.query.appId && req.query.appSecret) {
+      appId = req.query.appId;
+      appSecret = req.query.appSecret;
+    }
+
     if (appId && appSecret) {
       //do the authentication
-      appsCollection.findOne({ _id: appId, secret: appSecret }, function(err, app) {
+      appsCollection.findOne({ _id: appId, secret: appSecret }, function (err, app) {
         if (err) {
           console.error('error getting app:', { appId: appId, error: err.message });
           endRequest(500);

@@ -1,4 +1,4 @@
-batchAggregation = function(db, PROFILE, PROVIDER) {
+batchAggregation = function (db, PROFILE, PROVIDER) {
   var Log = { profile: PROFILE.name };
 
   var sourceCollection = PROFILE.resolution ? PROVIDER.collection : PROVIDER.rawCollection;
@@ -37,8 +37,6 @@ batchAggregation = function(db, PROFILE, PROVIDER) {
     scope: scope,
     jsMode: true
   };
-
-  console.log(query);
 
   console.log('  Using local MR');
   MapReduce(db, sourceCollection, destCollection, PROVIDER.map, PROVIDER.reduce, options);

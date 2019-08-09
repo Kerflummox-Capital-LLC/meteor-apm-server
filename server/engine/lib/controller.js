@@ -2,13 +2,15 @@ var tracerParser = require('./parsers/tracer');
 var methodMetricsParser = require('./parsers/methodMetrics');
 var pubMetricsParser = require('./parsers/pubMetrics');
 var stateManager = require('./stateManager');
+var nodeExporter = require('./parsers/nodeExporter');
+const url = require('url');
 
 var persisters = {
   collection: require('./persisters/collection'),
   trace: require('./persisters/trace')
 };
 
-module.exports = function(app, db) {
+module.exports = function (app, db) {
   var parsers = [
     {
       type: 'appStats',
@@ -57,9 +59,10 @@ module.exports = function(app, db) {
     }
   ];
 
-  app.use(function(req, res) {
+  app.use(async function (req, res) {
+    const path = (url.parse(req.url).pathname);
     if (req.method == 'POST') {
-      parsers.forEach(function(parserInfo) {
+      parsers.forEach(function (parserInfo) {
         var parsedData = parserInfo.parser(req.body);
         if (parsedData && parsedData.length > 0) {
           parserInfo.persister(req.app, parsedData);
@@ -75,6 +78,12 @@ module.exports = function(app, db) {
         'Content-Type': 'text/plain'
       });
       res.end();
+    } else if (req.method == 'GET' && path == '/metrics') {
+      const metrics = await nodeExporter(req.body);
+      res.writeHead(200, {
+        'Content-Type': 'text/plain'
+      });
+      res.end(metrics)
     } else {
       res.writeHead(400);
       res.end('cannot get  \n');
