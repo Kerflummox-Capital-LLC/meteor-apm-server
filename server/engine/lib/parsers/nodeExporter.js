@@ -106,7 +106,7 @@ module.exports = async function (data) {
       if (newCache[key]) {
         newCache[key] += (doc.value[key] || 0);
       } else {
-        newCache[`pub_${key}{label=${doc.value.pub}}`] = doc.value[key] || 0;
+        newCache[`pub_${key}{label="${doc.value.pub}"}`] = doc.value[key] || 0;
       }
     });
   })
@@ -127,7 +127,7 @@ module.exports = async function (data) {
       if (newCache[key]) {
         newCache[key] += (doc.value[key] || 0);
       } else {
-        newCache[`method_${key}{label=${doc.value.name}}`] = doc.value[key] || 0;
+        newCache[`method_${key}{label="${doc.value.name}"}`] = doc.value[key] || 0;
       }
     });
   })
@@ -148,7 +148,7 @@ module.exports = async function (data) {
       if (newCache[key]) {
         newCache[key] += (doc.value[key] || 0);
       } else {
-        newCache[`system_${key}{label=${doc.value.host}}`] = doc.value[key] || 0;
+        newCache[`system_${key}{label="${doc.value.host}"}`] = doc.value[key] || 0;
       }
     });
   })
@@ -169,7 +169,7 @@ module.exports = async function (data) {
       if (newCache[key]) {
         newCache[key] += (doc.value[key] || 0);
       } else {
-        newCache[`errors_${doc.value.type}_${key}{label=${doc.value.name}}`] = doc.value[key] || 0;
+        newCache[`errors_${doc.value.type}_${key}{label="${doc.value.name}"}`] = doc.value[key] || 0;
       }
     });
   })
