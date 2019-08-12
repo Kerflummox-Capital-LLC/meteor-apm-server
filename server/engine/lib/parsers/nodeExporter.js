@@ -92,8 +92,9 @@ module.exports = async function (data) {
   let newCache = cache;
 
   const date = moment();
-  const seconds = date.seconds();
-  const startTime = date.subtract((seconds % 15) - 30, 'seconds').startOf('second').toDate();
+  // const seconds = date.seconds();
+  // const startTime = date.subtract((seconds % 15) - 30, 'seconds').startOf('minute').toDate();
+  const startTime = date.startOf('minute').toDate();
 
   // publication metrics
   var pubMetricsCollection = db.collection('pubMetrics');
