@@ -93,7 +93,7 @@ module.exports = async function (data) {
 
   const date = moment();
   const seconds = date.seconds();
-  const startTime = date.subtract(seconds % 15, 'seconds').startOf('second').toDate();
+  const startTime = date.subtract((seconds % 15) - 30, 'seconds').startOf('second').toDate();
 
   // publication metrics
   var pubMetricsCollection = db.collection('pubMetrics');
