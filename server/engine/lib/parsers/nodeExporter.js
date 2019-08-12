@@ -94,14 +94,14 @@ module.exports = async function (data) {
   const date = moment();
   // const seconds = date.seconds();
   // const startTime = date.subtract((seconds % 15) - 30, 'seconds').startOf('minute').toDate();
-  const startTime = date.startOf('minute').toDate();
+  const startTime = date.startOf('minute').subtract(2, 'minute').toDate();
 
   // publication metrics
   var pubMetricsCollection = db.collection('pubMetrics');
   let pubMetrics = pubMetricsCollection.find({
     'value.appId': data.appId,
     'value.startTime': {
-      $gte: startTime
+      $eq: startTime
     }
   });
 
@@ -122,7 +122,7 @@ module.exports = async function (data) {
   let methodMetrics = methodsMetricsCollection.find({
     'value.appId': data.appId,
     'value.startTime': {
-      $gte: startTime
+      $eq: startTime
     }
   });
 
@@ -143,7 +143,7 @@ module.exports = async function (data) {
   let systemMetrics = systemMetricsCollection.find({
     'value.appId': data.appId,
     'value.startTime': {
-      $gte: startTime
+      $eq: startTime
     }
   });
 
@@ -164,7 +164,7 @@ module.exports = async function (data) {
   let errorMetrics = errorMetricsCollection.find({
     'value.appId': data.appId,
     'value.startTime': {
-      $gte: startTime
+      $eq: startTime
     }
   });
 
