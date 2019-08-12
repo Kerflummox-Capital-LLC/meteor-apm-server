@@ -4,11 +4,51 @@ var pubMetricsParser = require('./parsers/pubMetrics');
 var stateManager = require('./stateManager');
 var nodeExporter = require('./parsers/nodeExporter');
 const url = require('url');
+const { HTTP } = require('meteor/http');
+const moment = require('moment');
 
 var persisters = {
   collection: require('./persisters/collection'),
   trace: require('./persisters/trace')
 };
+
+const sendLokiLog = async function (logs, app) {
+  entries = [];
+  logs.forEach(stack => {
+    let entry = {
+      "ts": stack.startTime,
+      "line": ""
+    }
+
+    let line = {
+      "type": "error",
+      "errorType": stack.type,
+      "name": stack.trace && stack.trace.subType ? stack.trace.subType : "trace name not found",
+      "message": stack.name || "no message found",
+      "userId": stack.trace && stack.trace.userId ? stack.trace.userId : "no userId found",
+      "stack": stack.stacks || "no trace found"
+    };
+
+    entry.line = JSON.stringify(line);
+    entries.push(entry);
+  })
+
+  let labels = `{appId="${app._id}",appName="${app.name}",logType="error"}`
+  HTTP.post('http://localhost:3100/api/prom/push', {
+    data: {
+      "streams": [
+        {
+          "labels": labels,
+          "entries": entries
+        }
+      ]
+    }
+  }, function (err) {
+    if (err) {
+      console.log(err)
+    }
+  })
+}
 
 module.exports = function (app, db) {
   var parsers = [
@@ -68,8 +108,11 @@ module.exports = function (app, db) {
           parserInfo.persister(req.app, parsedData);
 
           if (parserInfo.type == 'errors') {
+
             // track initial state for errors;
             stateManager.setState(db, req.app, 'initialErrorsReceived');
+
+            sendLokiLog(parsedData, req.app);
           }
         }
       });
