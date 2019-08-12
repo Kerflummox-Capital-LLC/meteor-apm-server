@@ -91,12 +91,16 @@ module.exports = async function (data) {
   // set the new cache to the default caches values
   let newCache = cache;
 
+  const date = moment();
+  const seconds = date.seconds();
+  const startTime = date.subtract(seconds % 15, 'seconds').startOf('second').toDate();
+
   // publication metrics
   var pubMetricsCollection = db.collection('pubMetrics');
   let pubMetrics = pubMetricsCollection.find({
     'value.appId': data.appId,
     'value.startTime': {
-      $gte: moment().subtract(2, 'minutes').toDate()
+      $gte: startTime
     }
   });
 
@@ -117,7 +121,7 @@ module.exports = async function (data) {
   let methodMetrics = methodsMetricsCollection.find({
     'value.appId': data.appId,
     'value.startTime': {
-      $gte: moment().subtract(2, 'minutes').toDate()
+      $gte: startTime
     }
   });
 
@@ -138,7 +142,7 @@ module.exports = async function (data) {
   let systemMetrics = systemMetricsCollection.find({
     'value.appId': data.appId,
     'value.startTime': {
-      $gte: moment().subtract(2, 'minutes').toDate()
+      $gte: startTime
     }
   });
 
@@ -159,7 +163,7 @@ module.exports = async function (data) {
   let errorMetrics = errorMetricsCollection.find({
     'value.appId': data.appId,
     'value.startTime': {
-      $gte: moment().subtract(2, 'minutes').toDate()
+      $gte: startTime
     }
   });
 
