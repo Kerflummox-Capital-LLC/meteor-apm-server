@@ -85,7 +85,12 @@ module.exports = async function (data) {
 
   // reset all of the cached values to 0 for the next loop
   Object.keys(cache).forEach(key => {
-    cache[key] = 0;
+    // remove old error that have already posted a 0 value
+    if (key.substr(0, 7) == 'errors_' && cache[key] == 0) {
+      delete cache[key];
+    } else {
+      cache[key] = 0;
+    }
   });
 
   // set the new cache to the default caches values
@@ -174,7 +179,8 @@ module.exports = async function (data) {
       if (newCache[key]) {
         newCache[key] += (doc.value[key] || 0);
       } else {
-        newCache[`errors_${doc.value.type}_${key}{label="${doc.value.name}"}`] = doc.value[key] || 0;
+        // prometheus doesn't like '-' character in the key, so replace them
+        newCache[`errors_${doc.value.type.replace(/-/g, '_')}_${key}{label="${doc.value.name}"}`] = doc.value[key] || 0;
       }
     });
   })
