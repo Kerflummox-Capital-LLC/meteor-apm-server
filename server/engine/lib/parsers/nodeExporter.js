@@ -174,6 +174,7 @@ module.exports = async function (data) {
   });
 
   errorMetrics = await errorMetrics.toArray();
+  totalErrors = 0;
   errorMetrics.forEach(doc => {
     ERROR_KEYS.forEach((key) => {
       if (newCache[key]) {
@@ -182,8 +183,12 @@ module.exports = async function (data) {
         // prometheus doesn't like '-' character in the key, so replace them
         newCache[`errors_${doc.value.type.replace(/-/g, '_')}_${key}{label="${doc.value.name}"}`] = doc.value[key] || 0;
       }
+
+      totalErrors += (doc.value[key] || 0);
     });
   })
+
+  newCache[`errors_total{label="total_errors"}`] = totalErrors;
   // ---------------------------------------------
 
   // insert node exporter data into db;
