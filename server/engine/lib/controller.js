@@ -34,7 +34,7 @@ const sendLokiLog = async function (logs, app) {
   })
 
   let labels = `{appId="${app._id}",appName="${app.name}",logType="error"}`
-  HTTP.post('http://localhost:3100/api/prom/push', {
+  HTTP.post(Meteor.settings.private.lokiUrl, {
     data: {
       "streams": [
         {
@@ -107,7 +107,7 @@ module.exports = function (app, db) {
         if (parsedData && parsedData.length > 0) {
           parserInfo.persister(req.app, parsedData);
 
-          if (parserInfo.type == 'errors') {
+          if (parserInfo.type == 'errors' && Meteor.settings.private.lokiUrl) {
 
             // track initial state for errors;
             stateManager.setState(db, req.app, 'initialErrorsReceived');
