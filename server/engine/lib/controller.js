@@ -6,6 +6,7 @@ var nodeExporter = require('./parsers/nodeExporter');
 const url = require('url');
 const { HTTP } = require('meteor/http');
 const moment = require('moment');
+const { Meteor } = require('meteor/meteor');
 
 var persisters = {
   collection: require('./persisters/collection'),
