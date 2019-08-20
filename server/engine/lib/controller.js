@@ -5,8 +5,6 @@ var stateManager = require('./stateManager');
 var nodeExporter = require('./parsers/nodeExporter');
 const url = require('url');
 const { HTTP } = require('meteor/http');
-const moment = require('moment');
-const { Meteor } = require('meteor/meteor');
 
 var persisters = {
   collection: require('./persisters/collection'),
@@ -35,7 +33,7 @@ const sendLokiLog = async function (logs, app) {
   })
 
   let labels = `{appId="${app._id}",appName="${app.name}",logType="error"}`
-  HTTP.post(Meteor.settings.private.lokiUrl, {
+  HTTP.post(process.env.lokiUrl, {
     data: {
       "streams": [
         {
@@ -108,7 +106,7 @@ module.exports = function (app, db) {
         if (parsedData && parsedData.length > 0) {
           parserInfo.persister(req.app, parsedData);
 
-          if (parserInfo.type == 'errors' && Meteor.settings.private.lokiUrl) {
+          if (parserInfo.type == 'errors' && !!process.env.lokiUrl) {
 
             // track initial state for errors;
             stateManager.setState(db, req.app, 'initialErrorsReceived');
